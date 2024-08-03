@@ -1,0 +1,48 @@
+% Sensors Channel ID
+SensorChannelID = 2472648;
+% Sensors Channel Read API Key
+SensorReadAPI = 'HRV40X4D515PGVFT';
+
+% System Mode Channel ID
+systemChannelID = 2522218;
+% System Mode Channel Read API Key
+systemReadAPI = '28MU4DB4XNB9IEWX';
+
+% System Mode
+SystemMode = thingSpeakRead(systemChannelID, 'Fields', 1, 'ReadKey', systemReadAPI);
+
+disp(FlameData);
+disp(SystemMode);
+
+if SystemMode == 1
+
+    % Flame Sensor Data
+    FlameData = thingSpeakRead(SensorChannelID, 'Fields', 4, 'ReadKey', SensorReadAPI);
+   
+    %TalkBack_ID = '52134';
+    %TalkBack_apikey = 'XJB7KX6ZNU6CDFD4';
+    
+    %flameThreshold = 0;
+
+    % Send Alert
+    alert_body = 'There is a fire';
+    alert_subject = 'ThingSpeak Alert email';
+    
+    apiKey = 'TAKKc2NXdxJhbsnnNcF';
+    alertURL = "https://api.thingspeak.com/alerts/send";
+    options = weboptions("HeaderFields", ["ThingSpeak-Alerts-API-Key", apiKey]);
+   
+    %flame no fire --> 0
+    if FlameData == 1 % fire --> 1
+        disp('Fire detected! Sending alert...');
+        
+        webwrite(alertURL, "body", alert_body, "subject", alert_subject, options);
+        disp('Alert sent successfully.');
+        
+        %TalkBack
+        %url = strcat('https://api.thingspeak.com/talkbacks/', TalkBack_ID, '/commands.json');
+        
+        %response = webwrite(url, 'api_key', TalkBack_apikey, 'command_string', 'Open flame system');
+        disp('Open flame system command sent successfully.');
+       end
+end
