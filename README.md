@@ -6,6 +6,8 @@
 
 This project implements a smart agriculture system using the ThingSpeak platform. The system consists of multiple channels that store various sensor data and control different aspects of the farm. The system includes functionalities for monitoring soil moisture, temperature, humidity, flame, rain, and tank levels, and controlling a pump and roof based on sensor readings.
 
+![image](https://github.com/user-attachments/assets/dc694a01-343a-407a-b007-1f49223d546f)
+
 
 ## ThingSpeak Channels
 
